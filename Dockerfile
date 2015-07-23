@@ -1,15 +1,23 @@
-FROM ubuntu:14.04
-MAINTAINER Knut Ahlers <knut@ahlers.me>
+FROM phusion/baseimage:latest
+MAINTAINER Florian Loch <florian.loch@gmail.com>
 
-RUN useradd -u 1000 mumble \
+RUN add-apt-repository ppa:mumble/release \
  && apt-get update \
- && apt-get install -y mumble-server \
- && mkdir /data && chown 1000 /data
+ && apt-get install -y mumble-server
 
-ADD mumble-server.ini /config/mumble-server.ini
+RUN mkdir /data
+RUN mkdir /config
 
-VOLUME ["/data", "/config"]
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+ADD ./mumble-server.ini /default-mumble-server.ini
+
+RUN mkdir /etc/service/mumbled
+ADD mumbled.sh /etc/service/mumbled/run
+
+VOLUME /data
+VOLUME /config
+
 EXPOSE 64738/udp
 
-USER mumble
-ENTRYPOINT ["/usr/sbin/murmurd", "-fg", "-ini", "/config/mumble-server.ini"]
+CMD ["/sbin/my_init"]
