@@ -19,5 +19,6 @@ VOLUME /data
 VOLUME /config
 
 EXPOSE 64738/udp
+EXPOSE 64738/tcp
 
 CMD ["/sbin/my_init"]

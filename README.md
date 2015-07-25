@@ -6,7 +6,7 @@ It provides support for setting ```SuperUser```password via environment variable
 
 ## Usage
 1. `docker pull florianloch/mumble`
-2. `docker run -e "MUMBLE_SUPW=<YOUR SECRET PASSWORD>" -v "/some/directory:/data" -v "/some/other/directory:/config" -p 64738:64738 -d florianloch/mumble:latest`
+2. `docker run -e "MUMBLE_SUPW=<YOUR SECRET PASSWORD>" -v "/some/directory:/data" -v "/some/other/directory:/config" -p 64738:64738/tcp -p 64738:64738/udp -d florianloch/mumble:latest`
 (Strip `-d`if you do not want to run the container as daemon. Both volumes should point to the same one on the host)
 
 ## Need help?
